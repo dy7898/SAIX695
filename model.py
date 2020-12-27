@@ -54,15 +54,15 @@ class FewShotModel(nn.Module):
         xu1 = self.pool(nn.functional.relu(self.conv3u(xu)))  #in: 46,46,128 /out: 44,44,192--> 22,22,192
         xd1 = self.pool(nn.functional.relu(self.conv3d(xd)))  #in: 46,46,128 /out: 44,44,192--> 22,22,192
         
-        xu = nn.functional.relu(self.conv4u((xu1+xd1)/2))             #in: 22,22,192 /out: 22,22,384
-        xd = nn.functional.relu(self.conv4d((xu1+xd1)/2))             #in: 22,22,192 /out: 22,22,384
+        xu = nn.functional.relu(self.conv4u((xu1+xd1)))             #in: 22,22,192 /out: 22,22,384
+        xd = nn.functional.relu(self.conv4d((xu1+xd1)))             #in: 22,22,192 /out: 22,22,384
         
         xu = self.pool(nn.functional.relu(self.conv5u(xu)))  #in: 22,22,384 /out: 22,22,128-->11,11,256
         xd = self.pool(nn.functional.relu(self.conv5d(xd)))  #in: 22,22,384 /out: 22,22,128-->11,11,256
 
         #########################
         
-        x = (xu + xd)/2
+        x = (xu + xd)
         x = x.view(-1, 11*11*256)
 
         x = nn.functional.relu(self.fc(x))
