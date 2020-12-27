@@ -113,10 +113,10 @@ def train(args):
     " Set an optimizer or scheduler for Few-shot classification (optional) "
 
     # Default optimizer setting
-    #optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-    optimizer = torch.optim.SGD(model.parameters(), lr=0.00001, momentum = 0.8)
-    print("SGD 1e-5")
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer, mode='min', factor=0.1,patience=0,verbose=True)
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+    #optimizer = torch.optim.SGD(model.parameters(), lr=0.00001, momentum = 0.8)
+    print("SGD 1e-4")
+    #scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer, mode='min', factor=0.1,patience=0,verbose=True)
     """ TODO 1.b (optional) END """
 
     tl = Averager()  # save average loss
@@ -250,7 +250,7 @@ def train(args):
 
                 print('val accuracy mean : %.4f' % va.item())
                 print('val loss mean : %.4f' % vl.item())
-                scheduler.step(vl.item())
+                #scheduler.step(vl.item())
 
                 # initialize loss and accuracy mean
                 vl = None
